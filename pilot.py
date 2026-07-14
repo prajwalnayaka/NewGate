@@ -8,7 +8,7 @@ from langchain_tavily import TavilySearch
 load_dotenv()
 
 API_KEY=os.getenv("GOOGLE_API_KEY")
-CHAT_MODEL=os.getenv("GEMINI_3.1_F")
+CHAT_MODEL=os.getenv("GEMINI_3.5_F")
 
 @tool("Tavily_Web_Search")
 def browse(query,topic):
@@ -28,5 +28,13 @@ result=gemini.invoke(
          "content":"What are the latest developments regarding ChatGPT 5.6 Sol?"}
     ]}
 )
-print(result)
+for msg in result["messages"]:
+    print(f"\n{'='*20} {type(msg).__name__} {'='*20}")
+    if hasattr(msg, "tool_calls") and msg.tool_calls:
+        print(f"Tool call: {msg.tool_calls}")
+    if isinstance(msg.content, list):
+        for block in msg.content:
+            print(block.get("text", block))
+    else:
+        print(msg.content)
 print(f"{(time.time()-since)/60:.2f} (mm:ss)")
