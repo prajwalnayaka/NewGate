@@ -4,25 +4,35 @@ from langchain.agents import create_agent
 from langchain.tools import tool
 from langchain_tavily import TavilySearch
 from pprint import pp
-#from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 load_dotenv()
 
 API_KEY=os.getenv("GOOGLE_API_KEY")
 CHAT_MODEL=os.getenv("GEMINI_3.5_F")
 
-@tool("Tavily_Web_Search")
+class TavilySearchInput(BaseModel):
+    query: str = Field(..., description="The actual search query which is used to browse the internet.")
+    topic:str = Field(..., description="The general topic of the query")
+
+@tool("Tavily_Web_Search", args_schema=TavilySearchInput)
 def browse(query,topic):
     """Function to use Tavily Search API. Allows to search the internet about a specific topic based on a query."""
-    tavily=TavilySearch(max_results=10,topic=topic)
-    results=tavily.invoke({"query":query})
+    tavily=TavilySearch(max_results=5,topic=topic)
+    results=tavily.invoke({"query":f"{topic} {query}"})
     return results
 
-system_prompt="""You are a helpful AI agent, you're goal is to figure out the topic about which the user is asking questions about and form a concise query for web search about it.
-Use the available tool for accomplishing the goal of getting the user their answers. Present the news in this format: Clear and concise headline followed by 3-5 sentences of short summary and mention the source at the end."""
+system_prompt="""You are a helpful AI agent. Your goal is to figure out the topic about which the user is asking questions and form a concise query for web search about it.
+
+Present the news exactly in this format for each item:
+**[Headline]**
+[3-5 sentences of short summary]
+*Source: [Source URL or Name]*
+
+Provide exactly the requested number of updates."""
 
 since=time.time()
-gemini=create_agent(model=CHAT_MODEL,tools=[browse])
+gemini=create_agent(model=CHAT_MODEL,tools=[browse],system_prompt=system_prompt)
 result=gemini.invoke(
     {"messages":[
         {"role":"user",
