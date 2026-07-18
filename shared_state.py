@@ -1,15 +1,26 @@
-from typing import TypedDict, List, Annotated
+from typing import TypedDict, Annotated
 from langchain_core.messages import BaseMessage
 from langgraph.graph import add_messages
 
+class Article(TypedDict):
+    title: str
+    genre: str
+    publish_date: str
+    content: str
+    source: str
+
+
 class SharedState(TypedDict):
-    genre : str
-    user_query: str
+    genre : list[str]
+    # user_query: str
     search_topic: str
     search_query: str
+    retry_count: int
 
-    messages: Annotated[List[BaseMessage], add_messages]
+    selected_articles: list[Article]
+
+    messages: Annotated[list[BaseMessage], add_messages]
 
     relevant_results: bool
 
-    final_output: str
+    final_output: dict[str]
