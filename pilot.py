@@ -49,4 +49,6 @@ result=gemini.invoke(
 #     else:
 #         print(msg.content)
 pp(result['messages'][-2].content)
+""" result["messages"][-1]=AIMessage
+     ""        ""     [-2]=ToolMessage"""
 print(f"{(time.time()-since)/60:.2f} (mm:ss)")
