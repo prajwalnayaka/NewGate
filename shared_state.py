@@ -1,6 +1,7 @@
 from typing import TypedDict, Annotated
 from langchain_core.messages import BaseMessage
 from langgraph.graph import add_messages
+import operator
 
 class Article(TypedDict):
     title: str
@@ -17,7 +18,7 @@ class SharedState(TypedDict):
     search_query: str
     retry_count: int
 
-    selected_articles: list[Article]
+    selected_articles: Annotated[list[Article], operator.add]
 
     messages: Annotated[list[BaseMessage], add_messages]
 
