@@ -36,7 +36,7 @@ gemini=create_agent(model=CHAT_MODEL,tools=[browse],system_prompt=system_prompt)
 result=gemini.invoke(
     {"messages":[
         {"role":"user",
-         "content":"Get me the top 5 headlines about the Indian stock market."}
+         "content":"Regional news about Bangalore"}
     ]}
 )
 # for msg in result["messages"]:
@@ -48,5 +48,5 @@ result=gemini.invoke(
 #             print(block.get("text", block))
 #     else:
 #         print(msg.content)
-pp(result['messages'][-1].content)
+pp(result['messages'][-2].content)
 print(f"{(time.time()-since)/60:.2f} (mm:ss)")
