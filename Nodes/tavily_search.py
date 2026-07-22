@@ -1,4 +1,4 @@
-import logging, time, dotenv, os
+import logging, dotenv, os
 from google import genai
 from google.genai import types
 from tavily import TavilyClient
@@ -11,7 +11,7 @@ class SearchParams(BaseModel):
     search_query: str
     search_topic: str
 
-GEMINI_API_KEY = os.getenv("GOOGLE_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d | %H:%M:%S')
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 gemini=genai.Client(api_key=GEMINI_API_KEY)
 tavily_service = TavilyClient(api_key=TAVILY_API_KEY)
 
-def use_gemini(genre):
+def gemini_generate_search_params(genre):
     genre=genre
     prompt=f"""Create a short and concise search_query and search_topic for the Tavily API about {genre} to get the latest news and developments. 
 Set the search_topic as either one of 'news','general' or 'finance' based on the relevancy to the genre. Your reply must only consist of the key-value pairs for 
@@ -39,12 +39,12 @@ search_query and search_topic."""
         logger.error(f"Gemini failed to generate the search parameters for Tavily.")
         return None, None
 
-def tavily_search(state: BranchState):
+def tavily_search_node(state: BranchState):
     genre=state['genre']
     retry_count=state['retry_count']
     if retry_count>0:
         logger.info(f"Retry attempt {retry_count} of Tavily search for {genre}.")
-    search_query, search_topic = use_gemini(genre)
+    search_query, search_topic = gemini_generate_search_params(genre)
     if not search_query:
         logger.error(f"Search query wasn't generated for by Gemini.")
         return {"search_query": None, "search_topic": None, "raw_search_results": []}
