@@ -21,7 +21,7 @@ class SharedState(TypedDict):
 
     messages: Annotated[list[BaseMessage], add_messages]
 
-    relevant_results: bool
+    good_results: bool
 
     final_output: dict[str]
 
@@ -32,4 +32,4 @@ class BranchState(TypedDict):
     search_query: str
     retry_count: int
     raw_search_results: list[dict]
-    branch_final_result: list[Article]
+    branch_end_result: list[Article]
