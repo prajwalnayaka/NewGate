@@ -36,8 +36,7 @@ def critique_node(state: BranchState):
             critique_decision=response.parsed.is_good
         except Exception as e:
             logger.error(f"Could not generate critique decision. Error: {e}")
-            return {"good_results": None}
-
+            return {"good_results": None, "branch_end_result":[]}
         if critique_decision:
             logger.info("Critique node accepted the results.")
             return {"good_results": critique_decision}
