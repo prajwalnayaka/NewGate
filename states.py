@@ -23,6 +23,7 @@ class SharedState(TypedDict):
 
 
     final_output: dict[str]
+    branch_statuses: Annotated[list[str], operator.add]
 
 
 class BranchState(TypedDict):
