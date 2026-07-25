@@ -6,7 +6,7 @@ from Nodes import *
 def flow_router(state: BranchState):
     if state['good_results']:
         return "done"
-    elif state['retry_count'] is None:
+    elif state['good_results'] is None:
         return "possible_usage_exhaustion"
     elif state['retry_count']>3:
         return "give_up"
