@@ -5,7 +5,7 @@ logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(message)s', datef
 logger = logging.getLogger(__name__)
 
 def aggregate_branch_results_node(state: BranchState):
-    genre=state['branch_statuses']
+    genre=state['branch_genre']
     branch_results = state["branch_end_result"]
     if branch_results:
         logger.info(f"{genre} | Branch produced results; contributing to shared pool.")
