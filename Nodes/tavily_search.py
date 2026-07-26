@@ -52,9 +52,7 @@ def tavily_search_node(state: BranchState):
     raw_results=tavily_results.get('results',[]) if tavily_results else []
     if raw_results:
         logger.info(f"Tavily search successfully generated results.")
-        return {"search_query":search_query,
-                "search_topic":search_topic,
-                "raw_search_results": raw_results}
+        return {"raw_search_results": raw_results}
     else:
         logger.error(f"Tavily search failed to generate results.")
         return {"search_query":None,"search_topic":None,"raw_search_results": []}
