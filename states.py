@@ -22,14 +22,16 @@ class SharedState(TypedDict):
     #messages: Annotated[list[BaseMessage], add_messages]
 
     final_output: dict[str]
-    branch_statuses: Annotated[list[str], operator.add]
+    branch_statuses: Annotated[list[dict], operator.add]
 
 
 class BranchState(TypedDict):
-    genre: str
+    branch_genre: str
     search_topic: str
     search_query: str
     good_results: bool
     retry_count: int
     raw_search_results: list[dict]
+    selected_articles: Annotated[list[Article], operator.add]
+    branch_statuses: Annotated[list[dict], operator.add]
     branch_end_result: list[Article]
