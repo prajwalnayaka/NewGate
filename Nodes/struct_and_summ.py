@@ -23,7 +23,7 @@ class ArticleList(BaseModel):
     articles: list[ArticleModel]
 
 def gemini_struct_and_summ(genre, raw_search_results):
-    genre=genre.lower()
+    genre=genre
     raw_search_results=raw_search_results
     prompt=f"""Following are the internet search results for the genre '{genre}'.
     
