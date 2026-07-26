@@ -14,8 +14,6 @@ class Article(TypedDict):
 class SharedState(TypedDict):
     genre : list[str]
     # user_query: str
-    search_topic: str
-    search_query: str
 
     selected_articles: Annotated[list[Article], operator.add]
 
@@ -27,6 +25,8 @@ class SharedState(TypedDict):
 
 class BranchState(TypedDict):
     branch_genre: str
+    search_topic: str
+    search_query: str
     good_results: bool
     retry_count: int
     raw_search_results: list[dict]
