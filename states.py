@@ -19,8 +19,7 @@ class SharedState(TypedDict):
 
     selected_articles: Annotated[list[Article], operator.add]
 
-    messages: Annotated[list[BaseMessage], add_messages]
-
+    #messages: Annotated[list[BaseMessage], add_messages]
 
     final_output: dict[str]
     branch_statuses: Annotated[list[str], operator.add]
