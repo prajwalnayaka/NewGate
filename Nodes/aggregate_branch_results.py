@@ -8,7 +8,7 @@ def aggregate_branch_results_node(state: BranchState):
     branch_results = state["branch_end_result"]
     if branch_results:
         logger.info("Branch produced results; contributing to shared pool.")
-        return {"selected_articles": branch_results}
+        return {"selected_articles": list(branch_results)}
     else:
         logger.info("Branch produced no results to contribute.")
         return {"selected_articles": []}
