@@ -16,7 +16,7 @@ class CritiqueDecision(BaseModel):
     is_good: bool
 
 def critique_node(state: BranchState):
-    genre=state['genre']
+    genre=state['branch_genre']
     search_query=state['search_query']
     retry_count=state['retry_count']
     branch_end_result=state['branch_end_result']
@@ -24,7 +24,7 @@ def critique_node(state: BranchState):
         logger.error("One or more branches did not generate structured output.")
         return{"good_results": False, "retry_count": retry_count+1}
     else:
-        prompt=f"""Evalute whether the search results below are good enough to be part of a news digest. The search query for the results is: '{search_query}'
+        prompt=f"""Evaluate whether the search results below are good enough to be part of a news digest. The search query for the results is: '{search_query}'
         and genre is: '{genre}'. The evaluation should be based on the relevancy, recency, robustness and so on of the results strictly with respect to the 
         query. Your response should be boolean only.
         Search Results:
