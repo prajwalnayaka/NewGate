@@ -44,10 +44,10 @@ def gemini_struct_and_summ(genre, raw_search_results):
         response_mime_type="application/json",response_schema=ArticleList
     ))
     if response:
-        logger.info("Gemini successfully parsed the raw search results and structured and summarized them into a single list.")
+        logger.info(f"{genre} | Gemini successfully parsed the raw search results and structured and summarized them into a single list.")
         return [article.model_dump() for article in response.parsed.articles]
     else:
-        logger.error("Gemini failed to parse the raw search results.")
+        logger.error(f"{genre} | Gemini failed to parse the raw search results.")
         return None
 
 
@@ -55,11 +55,11 @@ def structure_and_summarize_node(state: BranchState):
     genre=state['branch_genre']
     raw_search_results=state['raw_search_results']
     if not raw_search_results:
-        logger.error("No raw search results to summarize (Tavily Search Node Error?)")
+        logger.error(f"{genre} | No raw search results to summarize (Tavily Search Node Error?)")
         return{"branch_end_result":[]}
     structured_summarized=gemini_struct_and_summ(genre, raw_search_results)
     if not structured_summarized:
-        logger.error("Gemini could not parse the search results.")
+        logger.error(f"{genre} | Gemini could not parse the search results.")
         return{"branch_end_result":[]}
-    logger.info("Successfully summarized and restructured the raw search results.")
+    logger.info(f"{genre} | Successfully summarized and restructured the raw search results.")
     return{"branch_end_result":structured_summarized}
