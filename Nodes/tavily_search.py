@@ -25,7 +25,7 @@ def gemini_generate_search_params(genre):
     prompt=f"""Create a short and concise search_query and search_topic for the Tavily API about {genre} to get the latest news and developments. 
 Set the search_topic as either one of 'news','general' or 'finance' based on the relevancy to the genre. Your reply must only consist of the key-value pairs for 
 search_query and search_topic."""
-    response=gemini.models.generate_content(model="gemini-2.5-flash",contents=prompt,config=types.GenerateContentConfig(
+    response=gemini.models.generate_content(model="gemini-3.1-flash-lite",contents=prompt,config=types.GenerateContentConfig(
         response_mime_type="application/json",response_schema=SearchParams
     ))
 
@@ -40,7 +40,7 @@ search_query and search_topic."""
         return None, None
 
 def tavily_search_node(state: BranchState):
-    genre=state['genre']
+    genre=state['branch_genre']
     retry_count=state['retry_count']
     if retry_count>0:
         logger.info(f"Retry attempt {retry_count} of Tavily search for {genre}.")
