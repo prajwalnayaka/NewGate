@@ -1,3 +1,4 @@
+from pprint import pprint
 from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
 from states import SharedState, BranchState
@@ -67,5 +68,5 @@ app=parent_graph.compile()
 
 # ----------------------------------------------------------------------------------- #
 
-news=app.invoke({"genre":['technology'],"selected_articles":[],"branch_statuses":[]})
-print(news['final_output'])
+news=app.invoke({"genre":['technology','gaming','Indian Stock Market'],"selected_articles":[],"branch_statuses":[]})
+pprint(news['final_output'])
