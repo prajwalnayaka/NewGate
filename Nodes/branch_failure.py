@@ -1,7 +1,7 @@
 from states import BranchState
 
 def branch_failure_handler_node(state: BranchState):
-    genre=state["genre"]
+    genre=state["branch_genre"]
     return {
         "branch_end_result": [],
         "branch_statuses": [
