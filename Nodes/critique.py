@@ -21,7 +21,7 @@ def critique_node(state: BranchState):
     retry_count=state['retry_count']
     branch_end_result=state['branch_end_result']
     if not branch_end_result:
-        logger.error("One or more branches did not generate structured output.")
+        logger.error(f"{genre} | One or more branches did not generate structured output.")
         return{"good_results": False, "retry_count": retry_count+1}
     else:
         prompt=f"""Evaluate whether the search results below are good enough to be part of a news digest. The search query for the results is: '{search_query}'
@@ -35,11 +35,11 @@ def critique_node(state: BranchState):
             ))
             critique_decision=response.parsed.is_good
         except Exception as e:
-            logger.error(f"Could not generate critique decision. Error: {e}")
+            logger.error(f"{genre} | Could not generate critique decision. Error: {e}")
             return {"good_results": None, "branch_end_result":[]}
         if critique_decision:
-            logger.info("Critique node accepted the results.")
+            logger.info(f"{genre} | Critique node accepted the results.")
             return {"good_results": critique_decision}
         else:
-            logger.info("Critique node rejected the results.")
+            logger.info(f"{genre} | Critique node rejected the results.")
             return {"good_results": critique_decision, "retry_count": retry_count + 1}
