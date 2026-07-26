@@ -43,16 +43,18 @@ def tavily_search_node(state: BranchState):
     genre=state['branch_genre']
     retry_count=state['retry_count']
     if retry_count>0:
-        logger.info(f"Retry attempt {retry_count} of Tavily search for {genre}.")
+        logger.info(f"{genre} | Retry attempt {retry_count} of Tavily search for {genre}.")
     search_query, search_topic = gemini_generate_search_params(genre)
     if not search_query:
-        logger.error(f"Search query wasn't generated for by Gemini.")
+        logger.error(f"{genre} | Search query wasn't generated for by Gemini.")
         return {"search_query": None, "search_topic": None, "raw_search_results": []}
     tavily_results=tavily_service.search(query=search_query,topic= search_topic, max_results=10)
     raw_results=tavily_results.get('results',[]) if tavily_results else []
     if raw_results:
-        logger.info(f"Tavily search successfully generated results.")
-        return {"raw_search_results": raw_results}
+        logger.info(f"{genre} | Tavily search successfully generated results.")
+        return {"search_query":search_query,
+                "search_topic":search_topic,
+                "raw_search_results": raw_results}
     else:
-        logger.error(f"Tavily search failed to generate results.")
+        logger.error(f"{genre} | Tavily search failed to generate results.")
         return {"search_query":None,"search_topic":None,"raw_search_results": []}
