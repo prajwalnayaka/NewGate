@@ -14,29 +14,58 @@ def flow_router(state: BranchState):
         return "retry"
 
 
-graph=StateGraph(SharedState)
+# ------------------------------ BRANCH GRAPH --------------------------------------- #
+
+branch_graph=StateGraph(BranchState)
 
 # Adding Nodes
-graph.add_node("tavily_search",tavily_search_node)
-graph.add_node("structure_and_summary",structure_and_summarize_node)
-graph.add_node("crtique_AI",critique_node)
-graph.add_node("aggregate_branch_results",aggregate_branch_results_node)
+branch_graph.add_node("tavily_search", tavily_search_node)
+branch_graph.add_node("structure_and_summary", structure_and_summarize_node)
+branch_graph.add_node("crtique_AI", critique_node)
+branch_graph.add_node("aggregate_branch_results", aggregate_branch_results_node)
+branch_graph.add_node("branch_failure_handler", branch_failure_handler_node)
 
 # Adding Edges
-graph.add_edge(START,"tavily_search")
-graph.add_edge("tavily_search","structure_and_summary")
-graph.add_edge("structure_and_summary","critique_AI")
-graph.add_edge("some_compiler_node?",END)
+branch_graph.add_edge(START, "tavily_search")
+branch_graph.add_edge("tavily_search", "structure_and_summary")
+branch_graph.add_edge("structure_and_summary", "critique_AI")
+branch_graph.add_edge("aggregate_branch_results", END)
+branch_graph.add_edge("branch_failure_handler", END)
 
 # Add conditional edge
-graph.add_conditional_edges("critique_AI",flow_router,{
+branch_graph.add_conditional_edges("critique_AI", flow_router, {
     "retry":"tavily_search",
     "done":"aggregate_branch_results",
-    "give_up":"some_exception_handler_node?",
-    "possible_usage_exhaustion":"some_exception_handler_node?"
+    "give_up":"branch_failure_handler",
+    "possible_usage_exhaustion":"branch_failure_handler",
 })
 
-app=graph.compile()
+compiled_branch=branch_graph.compile()
+# ----------------------------------------------------------------------------------- #
 
-news=app.invoke({"genre":["technology","finance","gaming","international affairs"]})
+
+# ------------------------------ PARENT GRAPH --------------------------------------- #
+
+def fan_out(state: SharedState):
+    return [Send("run_branch", {"genre": g, "retry_count": 0, "good_results": False}) for g in state["genre"]]
+
+
+
+parent_graph=StateGraph(SharedState)
+
+
+parent_graph.add_node("run_branch", compiled_branch)
+parent_graph.add_node("final_output_staging", final_output_staging_node)
+
+
+parent_graph.add_conditional_edges(START,fan_out ,["run_branch"])
+parent_graph.add_edge("run_branch","final_output_staging")
+parent_graph.add_edge("final_output_staging",END)
+
+
+app=parent_graph.compile()
+
+# ----------------------------------------------------------------------------------- #
+
+news=app.invoke({"genre":['technology'],"selected_articles":[],"branch_statuses":[]})
 print(news['final_output'])
