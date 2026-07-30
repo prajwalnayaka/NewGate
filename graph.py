@@ -68,5 +68,3 @@ app=parent_graph.compile()
 
 # ----------------------------------------------------------------------------------- #
 
-news=app.invoke({"genre":['technology','gaming','Indian Stock Market'],"selected_articles":[],"branch_statuses":[]})
-pprint(news['final_output'])
