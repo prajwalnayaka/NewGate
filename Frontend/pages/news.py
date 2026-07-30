@@ -16,6 +16,9 @@ for genre, data in news.items():
         st.divider()
         if data["status"]:
             st.warning(data["status"])
+            if st.button("Back to home", icon=":material/arrow_back:"):
+                st.switch_page("../front_app.py")
+            st.stop()
 
         for article in data["articles"]:
             st.subheader(article["title"])
