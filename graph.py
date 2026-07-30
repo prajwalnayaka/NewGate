@@ -9,7 +9,7 @@ def flow_router(state: BranchState):
         return "done"
     elif state['good_results'] is None:
         return "possible_usage_exhaustion"
-    elif state['retry_count']>3:
+    elif state['retry_count']>2:
         return "give_up"
     else:
         return "retry"
