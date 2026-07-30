@@ -38,4 +38,4 @@ with st.container(horizontal_alignment="center"):
             time.sleep(len(selected_genres) * 5)
         st.success("Redirecting...")
         time.sleep(3)
-        st.switch_page(r"pages/display.py")
+        st.switch_page(r"pages/news.py")
