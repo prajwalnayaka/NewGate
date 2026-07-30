@@ -38,7 +38,8 @@ ___
 
 ## How It Works
 ___
-<img width="1461" height="2838" alt="Graph" src="https://github.com/user-attachments/assets/d39579be-d9f1-413d-b084-2272d4f20231" />
+<img width="1461" height="2838" alt="Graph" src="https://github.com/user-attachments/assets/806e67e5-2383-444a-ac7b-f186657a2ac9" />
+
 
 - There are 2 distinct and separate LangGraph graphs at play. The parent graph acts as the web that houses all the children graphs.
 
