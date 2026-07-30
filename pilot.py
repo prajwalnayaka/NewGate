@@ -6,6 +6,9 @@ from langchain_tavily import TavilySearch
 from pprint import pp
 from pydantic import BaseModel, Field
 
+
+""" This file has nothing to do with NewGate's system. This file was my initial exploratory phase trying to see what LangChain works like."""
+
 load_dotenv()
 
 API_KEY=os.getenv("GOOGLE_API_KEY")
