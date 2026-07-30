@@ -60,9 +60,10 @@ ___
 
     - Critique Node: Use Gemini API to have an **LLM read the structured and summarized articles and give a verdict about whether the results are informative and relevant to the genre**. 
 
-    - Conditional Edge: If the **critique node accepts the results, the branch merges** it's genre specific into the selected articles pool of the SharedState. If the **critique node rejects the results, the branch retries** all the way back from Tavily Search Node. There is a maximum **retry limit of 3**, this is to ensure that the graph **doesn't run indefinitely**.    
+    - Conditional Edge: If the **critique node accepts the results, the branch merges** it's genre-specific into the selected articles pool of the SharedState. If the **critique node rejects the results, the branch retries** all the way back from Tavily Search Node. There is a maximum **retry limit of 3**, this is to ensure that the graph **doesn't run indefinitely**.    
 
     - Aggregation Node: The end results are in the selected articles pool, the aggregation takes these results/articles and reorganizes them into a final output dictionary with specific structure. 
+    - Error Handling Node: If a **branch couldn't produce results** due issues like API usage limits or a node failure, that **branch's specific genre's status is shows the error message in the expandable tab**. However, **this doesn't affect the results of the other genres; meaning even if one genre has no results, the other genres whose branches worked perfectly fine will display the articles**. 
 
 - FastAPI App: The FastAPI app hosts the NewGate backend and accept a list of genres and returns a JSON object with the fetched news in it.
 
