@@ -10,10 +10,6 @@ ___
 
 It is a **hybrid** agentic AI and AI workflow system, allowing AI to participate in sourcing, tidying and critiquing the news articles which will be presented to the user.
 
-## Screenshots
-___
-
-
 ## Why hybrid?
 ___
 The line between an agentic system and an AI workflow is pretty blurry. From my observation, the more one tries to control and standardize the behaviour of a supposed agentic AI system, the more deterministic it gets. Therefore, I believe the best way
@@ -23,12 +19,30 @@ liberty to make simple yes/no decisions for a specific task's flow of execution,
 In the case of NewGate, the workflow from 'genre-to-articles' is highly deterministic and doesn't require AI agency but only needs AI capability. The part where AI agency really shines is the critique node, there the AI has a validation call to make. If it deems the results as good, the process moves onto results staging.
 Whereas if it rejects the results, the 'genre-to-articles' deterministic AI workflow is run again, thus exhibiting AI agency to make decisions based on information and task at hand.
 
+## Screenshots
+___
+- Landing Page
+  <img width="1917" height="961" alt="Landing" src="https://github.com/user-attachments/assets/0b9b1bb1-98b1-4a49-8c6e-4c4eb8fbfcf6" />
+- Genre Selection
+  <img width="1917" height="967" alt="Selecting_genres" src="https://github.com/user-attachments/assets/130c47e4-56ec-4022-96ba-ec602ec3dbd6" />
+- Fetching
+  <img width="1917" height="962" alt="Fetching" src="https://github.com/user-attachments/assets/55c3a6da-88ed-4540-9ed9-5b294b04f756" />
+- Unexpanded Results
+  <img width="1917" height="971" alt="Result_un" src="https://github.com/user-attachments/assets/4e8a246a-c1d7-473a-b8b2-9c8035868f1d" />
+- Expanded Results
+    <img width="1912" height="967" alt="Result_ex" src="https://github.com/user-attachments/assets/4d42390a-4a9f-4e24-8398-4db42311802a" />
+- Error Handling
+  <img width="1917" height="967" alt="Error_1" src="https://github.com/user-attachments/assets/3acb71dc-1567-405e-a974-6ec41ec83881" />
+
+
+
 ## How It Works
 ___
+<img width="1461" height="2838" alt="Graph" src="https://github.com/user-attachments/assets/d39579be-d9f1-413d-b084-2272d4f20231" />
 
 - There are 2 distinct and separate LangGraph graphs at play. The parent graph acts as the web that houses all the children graphs.
 
-- The parent graph oversees the end-to-end flow of operations, guided by the SharedState. This is the 'user selected genres to articles' pipeline but the **parent graph doesn't have the capacity to generate the end results itself**. 
+- The parent graph oversees the end-to-end flow of operations, guided by the SharedState. This is the 'user selected genres to articles' pipeline but the **parent graph doesn't have the capacity to generate the end results by itself**. 
 
 - The children graph or the branches are **spawned by the Send objects** in the first node the parent graph. 
 
