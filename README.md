@@ -41,11 +41,11 @@ ___
 <img width="1461" height="2838" alt="Graph" src="https://github.com/user-attachments/assets/806e67e5-2383-444a-ac7b-f186657a2ac9" />
 
 
-- There are 2 distinct and separate LangGraph graphs at play. The parent graph acts as the web that houses all the children graphs.
+- There are 2 distinct and separate LangGraph graphs at play. The parent graph acts as the web that houses all the child graphs.
 
 - The parent graph oversees the end-to-end flow of operations, guided by the SharedState. This is the 'user selected genres to articles' pipeline but the **parent graph doesn't have the capacity to generate the end results by itself**. 
 
-- The children graph or the branches are **spawned by the Send objects** in the first node the parent graph. 
+- The child graphs or the branches are **spawned by the Send objects** in the first node the parent graph. 
 
 - Send object **creates the required 'metadata'** fields for each genre, which is then passed to created branch.   
 
