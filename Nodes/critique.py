@@ -30,7 +30,7 @@ def critique_node(state: BranchState):
         Search Results:
         {branch_end_result}"""
         try:
-            response=gemini.models.generate_content(model="gemini-3.5-flash",contents=prompt,config=types.GenerateContentConfig(
+            response=gemini.models.generate_content(model="gemini-3.1-flash-lite",contents=prompt,config=types.GenerateContentConfig(
                 response_mime_type='application/json',response_schema=CritiqueDecision
             ))
             critique_decision=response.parsed.is_good
