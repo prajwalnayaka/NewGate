@@ -16,12 +16,12 @@ ___
 
 ## Why hybrid?
 ___
-The line between an agentic system and an AI workflow is pretty blurry. From my observation, more on tries to control and standardize the behaviour of a supposed agentic AI system, the more deterministic the system becomes. Therefore, I believe the best way
-to incorporate the agentic AI paradigm is to have a blend of deterministic AI workflows, which perform a specific task in a highly predictable manner and then have an  agentic AI approach to govern the deterministic pipelines. This could be through giving the agent the 
-liberty to answer simple yes/no decisions for some task's flow of execution, selecting the appropriate pipeline to run, decisions based result/data validation and so on. 
+The line between an agentic system and an AI workflow is pretty blurry. From my observation, the more one tries to control and standardize the behaviour of a supposed agentic AI system, the more deterministic it gets. Therefore, I believe the best way
+to incorporate the agentic AI paradigm is to have a blend of deterministic AI workflows; which perform a specific task in a highly predictable manner and have an  agentic AI layer on top of it to govern the deterministic pipelines. This could be through giving the agent the 
+liberty to make simple yes/no decisions for a specific task's flow of execution, selecting the appropriate pipeline to run, decisions based on result/data validation and so on. 
 
 In the case of NewGate, the workflow from 'genre-to-articles' is highly deterministic and doesn't require AI agency but only needs AI capability. The part where AI agency really shines is the critique node, there the AI has a validation call to make. If it deems the results as good, the process moves onto results staging.
-Whereas if it rejects the results, the 'genre-to-articles' deterministic AI workflow is run again, thus exhibiting AI agency to make decisions based on information and taks at hand.
+Whereas if it rejects the results, the 'genre-to-articles' deterministic AI workflow is run again, thus exhibiting AI agency to make decisions based on information and task at hand.
 
 ## How It Works
 ___
@@ -34,7 +34,7 @@ ___
 
 - Send object **creates the required 'metadata'** fields for each genre, which is then passed to created branch.   
 
-- Each branch gets a **copy of the BranchState** which just one genre, therefore each genre gets its own branch. 
+- Each branch gets a **copy of the BranchState** with just one genre, therefore each genre gets its own branch. 
 
 - **These branches run concurrently, meaning that the runtime with this parallel setting is significantly less when compared to a sequential '*one genre after another*' approach**. 
 
