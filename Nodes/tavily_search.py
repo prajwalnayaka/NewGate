@@ -22,7 +22,8 @@ tavily_service = TavilyClient(api_key=TAVILY_API_KEY)
 
 def gemini_generate_search_params(genre):
     genre=genre
-    prompt=f"""Create a short and concise search_query and search_topic for the Tavily API about {genre} to get the latest news and developments. 
+    prompt=f"""Create a short and concise search_query and search_topic for the Tavily API about {genre} to get the latest news and developments. It's important
+    to search recent content. 
 Set the search_topic as either one of 'news','general' or 'finance' based on the relevancy to the genre. Your reply must only consist of the key-value pairs for 
 search_query and search_topic."""
     response=gemini.models.generate_content(model="gemini-3.1-flash-lite",contents=prompt,config=types.GenerateContentConfig(
@@ -48,7 +49,7 @@ def tavily_search_node(state: BranchState):
     if not search_query:
         logger.error(f"{genre} | Search query wasn't generated for by Gemini.")
         return {"search_query": None, "search_topic": None, "raw_search_results": []}
-    tavily_results=tavily_service.search(query=search_query,topic= search_topic, max_results=10)
+    tavily_results=tavily_service.search(query=search_query,topic= search_topic, max_results=10, time_range="week")
     raw_results=tavily_results.get('results',[]) if tavily_results else []
     if raw_results:
         logger.info(f"{genre} | Tavily search successfully generated results.")
