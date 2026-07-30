@@ -1,6 +1,6 @@
 import streamlit as st
 
-if not st.session_state["output"]['news']:
+if 'news' not in st.session_state["output"].keys():
     with st.container(horizontal_alignment="center"):
         st.error("There was an error while fetching news for you. I am sorry for the inconvenience.")
         st.write("Please retry again in a few minutes.")
