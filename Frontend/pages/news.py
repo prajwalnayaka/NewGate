@@ -5,7 +5,7 @@ if 'news' not in st.session_state["output"].keys():
         st.error("There was an error while fetching news for you. I am sorry for the inconvenience.")
         st.write("Please retry again in a few minutes.")
         if st.button("Back to home",icon=":material/arrow_back:"):
-            st.switch_page("../front_app.py")
+            st.switch_page("front_app.py")
         st.stop()
 
 
@@ -17,7 +17,7 @@ for genre, data in news.items():
         if data["status"]:
             st.warning(data["status"])
             if st.button("Back to home", icon=":material/arrow_back:"):
-                st.switch_page("../front_app.py")
+                st.switch_page("front_app.py")
             st.stop()
 
         for article in data["articles"]:
