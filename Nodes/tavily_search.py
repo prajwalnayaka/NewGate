@@ -26,7 +26,7 @@ def gemini_generate_search_params(genre):
     to search recent content. 
 Set the search_topic as either one of 'news','general' or 'finance' based on the relevancy to the genre. Your reply must only consist of the key-value pairs for 
 search_query and search_topic."""
-    response=gemini.models.generate_content(model="gemini-3.1-flash-lite",contents=prompt,config=types.GenerateContentConfig(
+    response=gemini.models.generate_content(model="gemini-3.5-flash-lite",contents=prompt,config=types.GenerateContentConfig(
         response_mime_type="application/json",response_schema=SearchParams
     ))
 
